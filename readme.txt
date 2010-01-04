@@ -31,8 +31,8 @@ specify your own column headers and add/remove columns as you see fit
 Known Bugs:
 
 *	No bugs are currently known. If you find one, please email
-support@feyreal.com with the subject "People Manager Bug". Please
-details the bug you are having, the version of WordPress you are using,
+codefix3r@gmail.com with the subject "People Manager Bug". Please
+detail the bug you are having, the version of WordPress you are using,
 and list any additional plugins you are using.
 
 == Installation ==
