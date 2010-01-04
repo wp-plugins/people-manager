@@ -59,4 +59,8 @@ lowest WordPress version this plugin is compatible with is 2.5.
 == Changelog ==
 
 = 2.0 =
+* Updated the people manager software so that it will display content where the shortcode is placed in the pages, rather than at the top of the page.
+* Minor bug fixes.
+
+= 1.0 =
 * Release version.
