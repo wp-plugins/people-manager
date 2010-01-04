@@ -58,5 +58,5 @@ lowest WordPress version this plugin is compatible with is 2.5.
 
 == Changelog ==
 
-= 1.0 =
+= 2.0 =
 * Release version.
