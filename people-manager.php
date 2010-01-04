@@ -8,6 +8,30 @@ Version: 1.0
 Author URI: http://feyreal.com
 */
 
+require_once('people-functions.php');
+
+/*
+**	Menu Builder
+**
+**	Creates and adds a menu page where you go to manage the entries in your people management database
+*/
+
+add_action('admin_menu', 'people_manager_add_menu_pages');
+
+function people_manager_add_menu_pages() {
+	$page = add_pages_page( 'Manage People', 'Manage People', 10, __FILE__, 'display_people_management_page');
+	$options = add_options_page('Manage People Options', 'Manage People Options', 10, __FILE__, 'people_management_options_page');
+	
+	add_action('admin_print_scripts-' . $page, 'people_manager_script_load');
+}
+
+function people_manager_script_load() {
+	wp_enqueue_script( 'tiny_mce' );
+	wp_enqueue_script( 'editor' );
+	wp_enqueue_script( 'editor-functions' );
+	wp_enqueue_script( 'people-manager-tinymce', WP_PLUGIN_URL . '/people-manager/people-manager-tinymce.js', array('tiny_mce'), '1.0' );
+}
+
 /*
 **	display_people_to_world SHORTCODE
 **
@@ -34,85 +58,119 @@ function display_people_to_world($attr) {
 				
 		$result = $wpdb->get_row($sql);
 		
+		$output = '';
+		
 		if(!empty($result->image)) {
 			if( $result->type == "faculty" ) {
-				echo '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
-						<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
-						<strong>Degree(s):</strong> ' . $result->major . '<br /><br />
-						<strong>Office:</strong> ' . $result->office . '</p>
-						<strong>Telephone:</strong> ' . $result->telephone . '</p>
-						<p><strong>About:</strong> ' . $result->about . '</p>
-						<p><strong>Resarch:</strong> ' . $result->research . '</p>
-						<p><strong>Keywords:</strong> ' . $result->keywords . '</p>
-						';
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
+							<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+							<strong>Degree(s):</strong> ' . $result->major . '<br /><br />
+							<strong>Office:</strong> ' . $result->office . '</p>
+							<strong>Telephone:</strong> ' . $result->telephone . '</p>
+							<p><strong>About:</strong> ' . $result->about . '</p>
+							<p><strong>Resarch:</strong> ' . $result->research . '</p>
+							<p><strong>Keywords:</strong> ' . $result->keywords . '</p>
+							';
+			}
+
+			if( $result->type == "staff" ) {
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
+							<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+							<strong>Office:</strong> ' . $result->office . '</p>
+							<strong>Telephone:</strong> ' . $result->telephone . '</p>
+							<p><strong>About:</strong> ' . $result->about . '</p>
+							';
 			}
 			
 			else {
-				echo '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
-						<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
-						<strong>Major:</strong> ' . $result->major . '<br /><br />
-						<strong>Grad. Year:</strong> ' . $result->gradYear . '<br /><br />
-						' . $result->about . '</p>';			
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
+								<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+								<strong>Major:</strong> ' . $result->major . '<br /><br />
+								<strong>Grad. Year:</strong> ' . $result->gradYear . '<br /><br />
+								' . $result->about . '</p>';			
 			}
 		}
 		
 		else {
 			if( $result->type == "faculty" ) {
-				echo '	<table border="0" width="100%">
-							<tr>
-								<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
-							</tr>
-							
-							<tr>
-								<td><strong>Degree(s):</strong> ' . $result->major . '</td>
-							</tr>
-
-							<tr>
-								<td><strong>Office:</strong> ' . $result->office . '</td>
-							</tr>
-							
-							<tr>
-								<td><strong>Telephone:</strong> ' . $result->telephone . '</td>
-							</tr>
-							
-							<tr>
-								<td><strong>About:</strong> ' . $result->about . '</td>
-							</tr>
-							
-							<tr>
-								<td><strong>Research:</strong> ' . $result->research . '</td>
-							</tr>
-							
-							<tr>
-								<td><strong>Keywords:</strong> ' . $result->keywords . '</td>
-							</tr>
-						</table>';			
+				$output .= '	<table border="0" width="100%">
+								<tr>
+									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+								</tr>
+								
+								<tr>
+									<td><strong>Degree(s):</strong> ' . $result->major . '</td>
+								</tr>
+	
+								<tr>
+									<td><strong>Office:</strong> ' . $result->office . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>Telephone:</strong> ' . $result->telephone . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>About:</strong> ' . $result->about . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>Research:</strong> ' . $result->research . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>Keywords:</strong> ' . $result->keywords . '</td>
+								</tr>
+							</table>';			
+			}
+			
+			else if( $result->type == 'staff' ) {
+				$output .= '	<table border="0" width="100%">
+								<tr>
+									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+								</tr>
+	
+								<tr>
+									<td><strong>Office:</strong> ' . $result->office . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>Telephone:</strong> ' . $result->telephone . '</td>
+								</tr>
+								
+								<tr>
+									<td><strong>About:</strong> ' . $result->about . '</td>
+								</tr>
+							</table>';				
 			}
 			
 			else {
-				echo '	<table border="0" width="100%">
-							<tr>
-								<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
-							</tr>
-							
-							<tr>
-								<td>' . $result->major . ' ' . $result->gradYear . '</td>
-							</tr>
-							
-							<tr>
-								<td>' . $result->about . '</td>
-							</tr>
-						</table>';	
+				$output .= '	<table border="0" width="100%">
+								<tr>
+									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+								</tr>
+								
+								<tr>
+									<td>' . $result->major . ' ' . $result->gradYear . '</td>
+								</tr>
+								
+								<tr>
+									<td>' . $result->about . '</td>
+								</tr>
+							</table>';	
 			}
 		}
 		
-		echo '<p><a href="?view=directory"><-- Back to People Directory</a></p><br /><br /><br /><br />';
+		$output .= '<p><a href="?view=directory"><-- Back to People Directory</a></p><br /><br /><br /><br />';
+		
+		return $output;
 	}
 	
 	else {
 		// grab the specific attributes we are interested in
 		$queryType = strtoupper($attr['querytype']);
 		
+		$theOutput = '';
 		$type = $attr['type'];
 		
 		if(!empty($type)) {
@@ -193,30 +251,44 @@ function display_people_to_world($attr) {
 		$results = $wpdb->get_results($sql);
 		
 		if($results) {
-			echo "<table border='0' width='100%'><tr>";
+			$theOutput .= "<table border='0' width='100%'><tr>";
 			
 			for($x = 0; $x < 5; $x++) {
-				echo '<th align="left">' . $columns[$x]['display_name'] . '</th>';
+				$theOutput .= '<th align="left">' . $columns[$x]['display_name'] . '</th>';
 			}
 	
-			echo "</tr>";
+			$theOutput .= "</tr>";
 					
 			foreach($results as $result) {
-				echo "<tr>";
-					echo "<td><a href='?view=single&id=" . $result->id . "'>" . $result->$columns[0]['field'] . "</a></td>";
-					echo "<td>" . $result->$columns[1]['field'] . "</td>";
-					echo "<td>" . $result->$columns[2]['field'] . "</td>";
-					echo "<td>" . $result->$columns[3]['field'] . "</td>";
-					echo "<td>" . $result->$columns[4]['field'] . "</td>";
-				echo "</tr>";
+				$theOutput .= "<tr>";
+					if( $result->visible == 'Y' )
+						$theOutput .= "<td><a href='?view=single&id=" . $result->id . "'>" . ucwords($result->$columns[0]['field']) . "</a></td>";
+					else if( !empty($result->$columns[0]['field']) )
+						$theOutput .= "<td>" . stripslashes(ucwords($result->$columns[0]['field'])) . "</td>";
+					
+					if( !empty($result->$columns[1]['field']) )
+						$theOutput .= "<td>" . stripslashes(ucwords($result->$columns[1]['field'])) . "</td>";
+					
+					if( !empty($result->$columns[2]['field']) )
+						$theOutput .= "<td>" . stripslashes(ucwords($result->$columns[2]['field'])) . "</td>";
+					
+					if( !empty($result->$columns[3]['field']) )
+						$theOutput .= "<td>" . stripslashes(ucwords($result->$columns[3]['field'])) . "</td>";
+
+					if( !empty($result->$columns[4]['field']) )
+						$theOutput .= "<td>" . stripslashes(ucwords($result->$columns[4]['field'])) . "</td>";
+						
+				$theOutput .= "</tr>";
 			}
 			
-			echo "</table>";
+			$theOutput .= "</table>";
 		}
 		
 		else {
-			echo "No people to display.";
+			$theOutput .= "No people to display.";
 		}
+		
+		return $theOutput;
 	}
 }
 
@@ -531,35 +603,6 @@ function add_student_public_form() {
 add_shortcode('do_add_student_public_form', 'add_student_public_form');
 
 /*
-**	insert_person
-**
-**	This function handles inserting a new entry into the database
-*/
-
-function insert_person($array_about_person) {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "people";
-	
-	if(!$wpdb->insert($table_name, $array_about_person)) // make sure we inserted into the database.
-		return "The person was not inserted in the database. Please contact your support professional.";
-	else
-		return "The person was successfully inserted in the database.";	
-}
-
-/*
-**	Menu Builder
-**
-**	Creates and adds a menu page where you go to manage the entries in your people management database
-*/
-
-add_action('admin_menu', 'people_manager_add_menu_pages');
-
-function people_manager_add_menu_pages() {
-	add_pages_page( 'Manage People', 'Manage People', 10, __FILE__, 'display_people_management_page');
-	add_options_page('Manage People Options', 'Manage People Options', 10, __FILE__, 'people_management_options_page');
-}
-
-/*
 **	Function Name: people_management_options_page
 **
 **	This function builds an options page for the People Manager Plugin
@@ -744,7 +787,7 @@ function people_management_options_page() {
 function display_people_management_page() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "people";
-
+	
 	// grab the variable for what action we are performing
 	// make sure to get it even if we decide to POST it or GET it
 	$action = $_POST['action'];
@@ -753,9 +796,7 @@ function display_people_management_page() {
 		$action = $_GET['action'];
 	}
 	
-	if($action == 'insert') {
-		check_admin_referer('people-manager-action-insert');
-		
+	if($action == 'insert') {		
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
@@ -799,266 +840,101 @@ function display_people_management_page() {
 								'updated' => time(),
 								'approved' => 'Y');
 
-		$insert_person = insert_person($about_person);
+		$data = insert_person($about_person);
 		
-		echo $insert_person;
+		echo $data;
 	}
 	
-	else if($action == 'search') {
-		check_admin_referer('people-manager-action-search-button-form');
+	else if($action == 'update') {		
+		if( !is_admin() )
+			wp_die("You are not authorized to be here.");
+
+		$theID = array('ID' => $_POST['personID']);
 		
+		$fname = $_POST['fname'];
+		$lname = $_POST['lname'];
+		$major = $_POST['major'];
+		$gradYear = $_POST['gradYear'];
+		$email = strtolower($_POST['email']);
+		$url = strtolower($_POST['url']);
+		$about = $_POST['about'];
+		$image = strtolower($_POST['image']);
+		$type = $_POST['type'];
+		$visible = $_POST['visible'];
+		$telephone = $_POST['telephone'];
+		$office = $_POST['office'];
+		$keywords = $_POST['keywords'];
+		$research = $_POST['research'];
+			
+		$urlCheck = substr($url, 0, 7);
+		if($urlCheck != 'http://' && !empty($url))
+			$url = 'http://' . $url;
+		
+		$imageCheck = substr($image, 0, 7);
+		if($imageCheck != 'http://' && !empty($image))
+			$image = 'http://' . $image;
+		
+		$about_person = array(	'fname' => $fname,
+								'lname' => $lname,
+								'major' => $major,
+								'gradYear' => $gradYear,
+								'email' => $email,
+								'url' => $url,
+								'about' => $about,
+								'image' => $image,
+								'type' => $type,
+								'visible' => $visible,
+								'telephone' => $telephone,
+								'office' => $office,
+								'keywords' => $keywords,
+								'research' => $research,
+								'updated' => time(),
+								'approved' => 'Y');
+		
+		$data = update_person($about_person, $theID);
+		
+		echo $data;
+	}
+	
+	else if($action == 'edit') {
+		if( !is_admin() )
+			wp_die("You are not authorized to be here.");
+		
+		$data = edit_person($_POST['person-id'], $_POST['person-type']);
+		
+		echo $data;
+	}
+	
+	else if($action == 'delete') {
+		if( !is_admin() )
+			wp_die("You are not authorized to be here.");
+		
+		$data = delete_person($_POST['personID']);
+		
+		echo $data;
+	}
+	
+	else if($action == 'search') {		
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
 		$searchFor = $_POST['searchFor'];
 		
-		$sql = "SELECT * FROM " . $table_name . " WHERE
-				LOCATE('" . $searchFor . "', fname) != 0 OR
-				LOCATE('" . $searchFor . "', lname) != 0 OR
-				LOCATE('" . $searchFor . "', major) != 0 OR
-				LOCATE('" . $searchFor . "', gradYear) != 0
-				ORDER BY lname DESC";
-				
-		$results = $wpdb->get_results($sql);		
-
-		if($results) {
-			echo "<h2>People Matching Search Term(s): " . $searchFor . "</h2>";
-
-			echo "<table width='100%' border='0'><tr>";
-			echo "<th align='left'>First Name</th>";
-			echo "<th align='left'>Last Name</th>";
-			echo "<th align='left'>Type</th>";
-			echo "<th align='left'>Major</th>";
-			echo "<th align='left'>Graduation Year</th>";
-			echo "</tr><tr><td colspan='5'><hr></td></tr>";
+		$data = perform_search($searchFor);
 		
-			foreach($results as $person) {
-				echo "<tr>";
-					echo "<td>" . $person->fname . "</td>";
-					echo "<td>" . $person->lname . "</td>";
-					echo "<td>" . $person->type . "</td>";
-					echo "<td>" . $person->major . "</td>";
-					echo "<td>" . $person->gradYear . "</td>";
-				echo "</tr>";
-			}
-			
-			echo '</table>';
-		}
-		
-		else {
-			echo "<h2>Search Results</h2>No people matched your query.<br />";
-		}
+		echo $data;
 	}
 	
-	else if($action == 'add-faculty') {
-		check_admin_referer('people-manager-action-add-faculty-button-form');
-		
-		if( !is_admin() )
-			wp_die("You are not authorized to be here.");
-
-		echo '<div class="wrap"><h2>Add Faculty</h2>';
-								
-		// add a nonce for security
-		if( function_exists('wp_nonce_field') )
-			wp_nonce_field('people-manager-action-insert');
-				
-		echo '<table border="0" width="100%">
-				<form method="post" action="">
-				<input type="hidden" name="action" value="insert">
-				<input type="hidden" name="type" value="faculty">
-				<input type="hidden" name="visible" value="Y"';
-
-		// add a nonce for security
-		if( function_exists('wp_nonce_field') )
-			wp_nonce_field('people-manager-action-insert');
-				
-		echo '<tr>
-				<td width="40%" align="right"><label for="fname">First Name:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="fname" name="fname" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="40%" align="right"><label for="lname">Last Name:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="lname" name="lname" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="40%" align="right"><label for="image">A URL To Your Photograph*:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="image" name="image" type="text" length="75" value="" /></td>
-			</tr>';
-			
-		echo '<tr>
-				<td width="40%" align="right"><label for="email">Your E-Mail Address:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="email" name="email" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="40%" align="right"><label for="url">Your Web site URL:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="url" name="url" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="40%" align="right"><label for="telephone">Office Telephone Number:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="telephone" name="telephone" type="text" length="75" value="" /></td>
-			</tr>';
-			
-		echo '<tr>
-				<td width="40%" align="right"><label for="office">Office Building and Room Number:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="office" name="office" type="text" length="75" value="" /></td>
-			</tr>';
-			
-		echo '	<tr>
-					<td width="40%" align="right"><label for="major">Your Degrees (Limit 75 Words):</label></td>
-					<td>&nbsp;</td>
-					<td align="left"><textarea id="major" name="major" rows="10" cols="25"></textarea></td>
-				</tr>';
-			
-		echo '<tr>
-				<td width="40%" align="right"><label for="keywords">Keywords About You and Your Research (separate each keyword with a comma):</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="keywords" name="keywords" type="text" length="75" value="" /></td>
-			</tr>';
-							
-		echo '<tr>
-				<td width="40%" align="right"><label for="about">Write A Paragraph About Yourself (Limit 150 Words):</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><textarea id="about" name="about" rows="10" cols="25"></textarea></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="40%" align="right"><label for="research">Write A Paragraph About Your Research Areas (Limit 150 Words):</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><textarea id="research" name="research" rows="10" cols="25"></textarea></td>
-			</tr>';
-			
-		echo '</table><p>*Please upload your photograph to Flickr or another image storage Web site. You will be given a URL from that Web site to use here.</p>';
-		
-		echo '<input type="submit" class="button-primary" value="Submit Profile" /></form>';		
-	}
-	
-	else if($action == 'add-student') {
-		check_admin_referer('people-manager-action-add-student-button-form');
-		
+	else if($action == 'add') {		
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
-		echo '<div class="wrap"><h2>Add Person</h2><table border="0" width="100%">
-				<form method="post" action="">';
-								
-				// add a nonce for security
-				if( function_exists('wp_nonce_field') )
-					wp_nonce_field('people-manager-action-insert');
+		$data = display_add_form($_POST['type']);
 		
-				echo '<input type="hidden" name="action" value="insert">';
-		
-		echo '<tr>
-				<td width="20%" align="right"><label for="fname">First Name:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="fname" name="fname" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="lname">Last Name:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="lname" name="lname" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="type">Are you:</label></td>
-				<td>&nbsp;</td>
-				<td align="left">
-					<select id="type" name="type">
-						<option value="Alum">An Alumnus</option>
-						<option value="Current Student">A Current Student</option>
-						<option value="Faculty">A Faculty Member</option>
-					</select>
-				</td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="major">Your Major:</label></td>
-				<td>&nbsp;</td>
-				<td align="left">
-			';
-			
-		$peopleManagerOpts = unserialize(get_option('people-manager-options'));
-		$allowedMajors = $peopleManagerOpts['allowedMajors'];
-		
-		if(empty($allowedMajors)) {
-			echo '<input id="major" name="major" type="text" length="75" value="" />';
-		}
-		
-		else {
-			$temp = explode(',', $allowedMajors);
-			
-			echo '<select id="major" name="major">';
-			echo '<option value=""></option>';
-			
-			for($x = 0; $x < count($temp); $x++) {
-				echo '<option value="' . trim($temp[$x]) . '">' . trim($temp[$x]) . '</option>';
-			}
-			
-			echo '</select>';
-		}
-		
-		echo '</td></tr>';
-			
-		echo '<tr>
-				<td width="20%" align="right"><label for="gradYear">Your Graduation Year:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="gradYear" name="gradYear" type="text" maxlength="4" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="email">Your E-Mail Address:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="email" name="email" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="url">Your Web site URL:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="url" name="url" type="text" length="75" value="" /></td>
-			</tr>';
-
-		echo '<tr>
-				<td width="20%" align="right"><label for="image">A URL To Your Photograph*:</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><input id="image" name="image" type="text" length="75" value="" /></td>
-			</tr>';
-			
-		echo '<tr>
-				<td width="20%" align="right"><label for="about">Anything else you would like to share with other alumni?</label></td>
-				<td>&nbsp;</td>
-				<td align="left"><textarea id="about" name="about" rows="10" cols="50"></textarea></td>
-			</tr>';
-			
-		echo '<tr>
-				<td width="20%" align="right"><label for="visible">Would you like to share your information with other alumni?</label></td>
-				<td>&nbsp;</td>
-				<td align="left">
-					<select id="visible" name="visible">
-						<option value="Y" SELECTED>Yes</option>
-						<option value="N">No</option>
-					</select>
-				</td>
-			</tr>';
-
-		echo '</table><p>*Please upload your photograph to Flickr or another image storage Web site. You will be given a URL from that Web site to use here.</p>';
-		
-		echo '<input type="submit" class="button-primary" value="Add Student/Alum" /></form></div>';
+		echo $data;
 	}
 	
-	else if($action == "approve") {
-		check_admin_referer('people-manager-action-approve-button-form');
-		
+	else if($action == "approve") {		
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
@@ -1071,9 +947,7 @@ function display_people_management_page() {
 			echo "Entry approved!";
 	}
 	
-	else if($action == "delete") {
-		check_admin_referer('people-manager-action-delete-button-form');
-		
+	else if($action == "delete") {		
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
@@ -1090,142 +964,9 @@ function display_people_management_page() {
 		if( !is_admin() )
 			wp_die("You are not authorized to be here.");
 			
-		echo 	'<div class="wrap"><h2>Manage People</h2>
-					<table width="100%" border="0">
-						<tr>
-							<td width="25%">
-								<form method="post" action="">';
-								
-								// add a nonce for security
-								if( function_exists('wp_nonce_field') )
-									wp_nonce_field('people-manager-action-add-student-button-form');
-
-								echo '<input type="hidden" name="action" value="add-student" />
-								<input type="submit" class="button-primary" value="Add New Student/Alum" />				
-								</form>
-							</td>
-
-							<td width="25%">
-								<form method="post" action="">';
-								
-								// add a nonce for security
-								if( function_exists('wp_nonce_field') )
-									wp_nonce_field('people-manager-action-add-faculty-button-form');
-
-								echo '<input type="hidden" name="action" value="add-faculty" />
-								<input type="submit" class="button-primary" value="Add New Faculty" />				
-								</form>
-							</td>
-							
-							<td width="50%">
-								<form method="post" action="">';
-								
-								// add a nonce for security
-								if( function_exists('wp_nonce_field') )
-									wp_nonce_field('people-manager-action-search-button-form');
-
-								echo '<input length="90" type="text" name="searchFor" value="" />
-								<input type="hidden" name="action" value="search" />
-								<input type="submit" class="button-primary" value="Search" />				
-								</form>
-							</td>
-						</tr>
-					</table>';
-
-		echo "<br /><br /><h2>People Waiting To Be Approved</h2>";
-		echo "<p>Only fifty (50) people are shown. Approve or delete these and more will be shown.</p>";
-
-		$sql = "SELECT * FROM " . $table_name . " WHERE approved = 'N' ORDER BY gradYear DESC, lname ASC LIMIT 50";	
-		$approvals = $wpdb->get_results($sql);
+		$data = default_view();
 		
-		if($approvals) {
-			echo "<table width='100%' border='0'><tr>";
-			echo "<th align='left'>First Name</th>";
-			echo "<th align='left'>Last Name</th>";
-			echo "<th align='left'>Type</th>";
-			echo "<th align='left'>Major</th>";
-			echo "<th align='left'>Graduation Year</th>";
-			echo "<th>&nbsp;</th>";
-			echo "<th>&nbsp;</th>";
-			echo "</tr><tr><td colspan='7'><hr></td></tr>";
-
-			foreach($approvals as $approve) {
-				echo "<tr>";
-					echo "<td>" . $approve->fname . "</td>";
-					echo "<td>" . $approve->lname . "</td>";
-					echo "<td>" . $approve->type . "</td>";
-					echo "<td>" . $approve->major . "</td>";
-					echo "<td>" . $approve->gradYear . "</td>";
-					
-					echo '	<td>
-							<form method="post" action="">';
-								
-								// add a nonce for security
-								if( function_exists('wp_nonce_field') )
-									wp_nonce_field('people-manager-action-approve-button-form');
-
-								echo '<input type="hidden" name="idNum" value="' . $approve->id . '">
-								<input type="hidden" name="action" value="approve" />
-								<input type="submit" class="button-primary" value="Approve" />				
-								</form>
-							</td>';
-							
-					echo '	<td>
-							<form method="post" action="">';
-								
-								// add a nonce for security
-								if( function_exists('wp_nonce_field') )
-									wp_nonce_field('people-manager-action-delete-button-form');
-
-								echo '<input type="hidden" name="idNum" value="' . $approve->id . '">
-								<input type="hidden" name="action" value="delete" />
-								<input type="submit" class="button-primary" value="Delete" />				
-								</form>
-							</td>';
-							
-				echo "</tr>";
-			}
-			
-			echo '</table>';
-		}
-		
-		else {
-			echo "<p>No approvals required</p>";
-		}
-
-		$sql = "SELECT * FROM " . $table_name . " WHERE approved = 'Y' ORDER BY gradYear DESC, lname ASC LIMIT 50";
-		$results = $wpdb->get_results($sql);
-		
-		echo "<br /><br /><h2>People In Your Database</h2>";
-		echo "<p>Only fifty (50) people are shown. Use the search bar to find more.</p>";
-		
-		if($results) {	
-			echo "<table width='100%' border='0'><tr>";
-			echo "<th align='left'>First Name</th>";
-			echo "<th align='left'>Last Name</th>";
-			echo "<th align='left'>Type</th>";
-			echo "<th align='left'>Major</th>";
-			echo "<th align='left'>Graduation Year</th>";
-			echo "</tr><tr><td colspan='5'><hr></td></tr>";
-		
-			foreach($results as $person) {
-				echo "<tr>";
-					echo "<td>" . $person->fname . "</td>";
-					echo "<td>" . $person->lname . "</td>";
-					echo "<td>" . $person->type . "</td>";
-					echo "<td>" . $person->major . "</td>";
-					echo "<td>" . $person->gradYear . "</td>";
-				echo "</tr>";
-			}
-			
-			echo '</table>';
-		}
-		
-		else {
-			echo "<p>There are no people in your database.</p>";
-		}
-		
-		echo '</div>';
+		echo $data;
 	}
 }
 
