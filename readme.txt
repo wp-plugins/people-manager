@@ -1,10 +1,9 @@
 === People Manager ===
-Contributors: Tim Moore (codeautom8r)
-Donate link: http://feyreal.com/wordpress/wordpress-plugins/people-manager/
+Contributors: Tim Moore (tmoorewp, codefix3r@gmail.com)
 Tags: education, alumni, people
 Requires at least: 2.5
-Tested up to: 2.8.4a
-Stable tag: trunk
+Tested up to: 2.8.6
+Stable tag: 2.0
 
 The People Manager is designed to be a way for people to share quick
 data about themselves. Designed and used primarily in a university or
