@@ -3,7 +3,7 @@ Contributors: Tim Moore (tmoorewp, codefix3r@gmail.com)
 Tags: education, alumni, people
 Requires at least: 2.5
 Tested up to: 2.8.6
-Stable tag: 2.0
+Stable tag: 2.1
 
 The People Manager is designed to be a way for people to share quick
 data about themselves. Designed and used primarily in a university or
@@ -58,8 +58,10 @@ lowest WordPress version this plugin is compatible with is 2.5.
 
 == Changelog ==
 
-= 2.0 =
-* Updated the people manager software so that it will display content where the shortcode is placed in the pages, rather than at the top of the page.
+= 2.1 =
+* Updated the people manager software so that it will display content 
+where the shortcode is placed in the pages, rather than at the top of 
+the page.
 * Minor bug fixes.
 
 = 1.0 =
