@@ -1,10 +1,9 @@
 === People Manager ===
-Contributors: Tim Moore (codeautom8r)
-Donate link: http://feyreal.com/wordpress/wordpress-plugins/people-manager/
+Contributors: Tim Moore (tmoorewp, codefix3r@gmail.com)
 Tags: education, alumni, people
 Requires at least: 2.5
-Tested up to: 2.8.4a
-Stable tag: trunk
+Tested up to: 2.8.6
+Stable tag: 2.1
 
 The People Manager is designed to be a way for people to share quick
 data about themselves. Designed and used primarily in a university or
@@ -32,8 +31,8 @@ specify your own column headers and add/remove columns as you see fit
 Known Bugs:
 
 *	No bugs are currently known. If you find one, please email
-support@feyreal.com with the subject "People Manager Bug". Please
-details the bug you are having, the version of WordPress you are using,
+codefix3r@gmail.com with the subject "People Manager Bug". Please
+detail the bug you are having, the version of WordPress you are using,
 and list any additional plugins you are using.
 
 == Installation ==
@@ -58,6 +57,12 @@ version have been tested, yet. For compatibility with shortcodes, the
 lowest WordPress version this plugin is compatible with is 2.5.
 
 == Changelog ==
+
+= 2.1 =
+* Updated the people manager software so that it will display content 
+where the shortcode is placed in the pages, rather than at the top of 
+the page.
+* Minor bug fixes.
 
 = 1.0 =
 * Release version.
