@@ -1,5 +1,5 @@
 === People Manager ===
-Contributors: Tim Moore (tmoorewp, codefix3r@gmail.com)
+Contributors: Tim Moore (tmoorewp, tim.moore@maine.edu)
 Tags: education, alumni, people
 Requires at least: 2.5
 Tested up to: 2.8.6
@@ -31,7 +31,7 @@ specify your own column headers and add/remove columns as you see fit
 Known Bugs:
 
 *	No bugs are currently known. If you find one, please email
-codefix3r@gmail.com with the subject "People Manager Bug". Please
+tim.moore@maine.edu with the subject "People Manager Bug". Please
 detail the bug you are having, the version of WordPress you are using,
 and list any additional plugins you are using.
 
