@@ -62,29 +62,29 @@ function display_people_to_world($attr) {
 		
 		if(!empty($result->image)) {
 			if( $result->type == "faculty" ) {
-				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
-							<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '">
+							<strong><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a></strong> (' . $result->email . ')<br /><br />
 							<strong>Degree(s):</strong> ' . $result->major . '<br /><br />
 							<strong>Office:</strong> ' . $result->office . '</p>
 							<strong>Telephone:</strong> ' . $result->telephone . '</p>
-							<p><strong>About:</strong> ' . $result->about . '</p>
-							<p><strong>Resarch:</strong> ' . $result->research . '</p>
-							<p><strong>Keywords:</strong> ' . $result->keywords . '</p>
+							<p><strong>About:</strong> ' . stripslashes($result->about) . '</p>
+							<p><strong>Resarch:</strong> ' . stripslashes($result->research) . '</p>
+							<p><strong>Keywords:</strong> ' . stripslashes($result->keywords) . '</p>
 							';
 			}
 
 			if( $result->type == "staff" ) {
-				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
-							<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '">
+							<strong><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a></strong> (' . $result->email . ')<br /><br />
 							<strong>Office:</strong> ' . $result->office . '</p>
 							<strong>Telephone:</strong> ' . $result->telephone . '</p>
-							<p><strong>About:</strong> ' . $result->about . '</p>
+							<p><strong>About:</strong> ' . stripslashes($result->about) . '</p>
 							';
 			}
 			
 			else {
-				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . $result->fname . ' ' . $result->lname . '">
-								<strong><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a></strong> (' . $result->email . ')<br /><br />
+				$output .= '	<p><img valign="top" align="right" src="' . $result->image . '" alt="Image of ' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '">
+								<strong><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a></strong> (' . $result->email . ')<br /><br />
 								<strong>Major:</strong> ' . $result->major . '<br /><br />
 								<strong>Grad. Year:</strong> ' . $result->gradYear . '<br /><br />
 								' . $result->about . '</p>';			
@@ -95,7 +95,7 @@ function display_people_to_world($attr) {
 			if( $result->type == "faculty" ) {
 				$output .= '	<table border="0" width="100%">
 								<tr>
-									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+									<td><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a> (' . $result->email . ')</td>
 								</tr>
 								
 								<tr>
@@ -111,15 +111,15 @@ function display_people_to_world($attr) {
 								</tr>
 								
 								<tr>
-									<td><strong>About:</strong> ' . $result->about . '</td>
+									<td><strong>About:</strong> ' . stripslashes($result->about) . '</td>
 								</tr>
 								
 								<tr>
-									<td><strong>Research:</strong> ' . $result->research . '</td>
+									<td><strong>Research:</strong> ' . stripslashes($result->research) . '</td>
 								</tr>
 								
 								<tr>
-									<td><strong>Keywords:</strong> ' . $result->keywords . '</td>
+									<td><strong>Keywords:</strong> ' . stripslashes($result->keywords) . '</td>
 								</tr>
 							</table>';			
 			}
@@ -127,7 +127,7 @@ function display_people_to_world($attr) {
 			else if( $result->type == 'staff' ) {
 				$output .= '	<table border="0" width="100%">
 								<tr>
-									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+									<td><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a> (' . $result->email . ')</td>
 								</tr>
 	
 								<tr>
@@ -139,7 +139,7 @@ function display_people_to_world($attr) {
 								</tr>
 								
 								<tr>
-									<td><strong>About:</strong> ' . $result->about . '</td>
+									<td><strong>About:</strong> ' . stripslashes($result->about) . '</td>
 								</tr>
 							</table>';				
 			}
@@ -147,7 +147,7 @@ function display_people_to_world($attr) {
 			else {
 				$output .= '	<table border="0" width="100%">
 								<tr>
-									<td><a href="' . $result->url . '" target="new">' . $result->fname . ' ' . $result->lname . '</a> (' . $result->email . ')</td>
+									<td><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a> (' . $result->email . ')</td>
 								</tr>
 								
 								<tr>
@@ -155,7 +155,7 @@ function display_people_to_world($attr) {
 								</tr>
 								
 								<tr>
-									<td>' . $result->about . '</td>
+									<td>' . stripslashes($result->about) . '</td>
 								</tr>
 							</table>';	
 			}
