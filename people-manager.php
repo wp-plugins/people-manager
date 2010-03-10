@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: People Manager
-Plugin URI: http://feyreal.com/wordpress/wordpress-plugins/people-manager/
+Plugin URI: http://dreaminginbetween.com/wordpress/plugins/people-manager/
 Description: This plugin provides functionality for listing people associated with your Web site.
 Author: Tim Moore (support@feyreal.com)
 Version: 2.1
-Author URI: http://feyreal.com
+Author URI: http://dreaminginbetween.com
 */
 
 require_once('people-functions.php');
