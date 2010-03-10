@@ -595,13 +595,13 @@ function edit_person($personID, $personType) {
 		$output .= '<tr>
 				<td width="40%" align="right"><label for="about">Write A Paragraph About Yourself (Limit 150 Words):</label></td>
 				<td>&nbsp;</td>
-				<td align="left"><textarea id="about" name="about" rows="10" cols="25">' . $result->about . '</textarea></td>
+				<td align="left"><textarea id="about" name="about" rows="10" cols="25">' . stripslashes($result->about) . '</textarea></td>
 			</tr>';
 
 		$output .= '<tr>
 				<td width="40%" align="right"><label for="research">Write A Paragraph About Your Research Areas (Limit 150 Words):</label></td>
 				<td>&nbsp;</td>
-				<td align="left"><textarea id="research" name="research" rows="10" cols="25">' . $result->research . '</textarea></td>
+				<td align="left"><textarea id="research" name="research" rows="10" cols="25">' . stripslashes($result->research) . '</textarea></td>
 			</tr>';
 			
 		$output .= '</table><p>*Please upload your photograph to Flickr or another image storage Web site. You will be given a URL from that Web site to use here.</p>';
@@ -723,7 +723,7 @@ function edit_person($personID, $personType) {
 		$output .= '<tr>
 				<td width="20%" align="right"><label for="about">Anything else you would like to share with other alumni?</label></td>
 				<td>&nbsp;</td>
-				<td align="left"><textarea id="about" name="about" rows="10" cols="50">' . $result->about . '</textarea></td>
+				<td align="left"><textarea id="about" name="about" rows="10" cols="50">' . stripslashes($result->about) . '</textarea></td>
 			</tr>';
 		
 		
@@ -816,7 +816,7 @@ function edit_person($personID, $personType) {
 		$output .= '<tr>
 				<td width="40%" align="right"><label for="about">Write A Paragraph About Yourself (Limit 150 Words):</label></td>
 				<td>&nbsp;</td>
-				<td align="left"><textarea id="about" name="about" rows="10" cols="25">' . $result->about . '</textarea></td>
+				<td align="left"><textarea id="about" name="about" rows="10" cols="25">' . stripslashes($result->about) . '</textarea></td>
 			</tr>';
 			
 		$output .= '</table><p>*Please upload your photograph to Flickr or another image storage Web site. You will be given a URL from that Web site to use here.</p>';
