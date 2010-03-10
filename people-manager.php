@@ -87,7 +87,7 @@ function display_people_to_world($attr) {
 								<strong><a href="' . $result->url . '" target="new">' . stripslashes($result->fname) . ' ' . stripslashes($result->lname) . '</a></strong> (' . $result->email . ')<br /><br />
 								<strong>Major:</strong> ' . $result->major . '<br /><br />
 								<strong>Grad. Year:</strong> ' . $result->gradYear . '<br /><br />
-								' . $result->about . '</p>';			
+								' . stripslashes($result->about) . '</p>';			
 			}
 		}
 		
