@@ -4,7 +4,7 @@ Plugin Name: People Manager
 Plugin URI: http://feyreal.com/wordpress/wordpress-plugins/people-manager/
 Description: This plugin provides functionality for listing people associated with your Web site.
 Author: Tim Moore (support@feyreal.com)
-Version: 1.0
+Version: 2.0
 Author URI: http://feyreal.com
 */
 
