@@ -3,7 +3,7 @@
 Plugin Name: People Manager
 Plugin URI: http://dreaminginbetween.com/wordpress/plugins/people-manager/
 Description: This plugin provides functionality for listing people associated with your Web site.
-Author: Tim Moore (support@feyreal.com)
+Author: Tim Moore (tim.moore@maine.edu)
 Version: 2.1
 Author URI: http://dreaminginbetween.com
 */
