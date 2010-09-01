@@ -1,9 +1,12 @@
 === People Manager ===
-Contributors: Tim Moore (tmoorewp, tim.moore@maine.edu)
+Contributors: Tim Moore (tmoorewp)
 Tags: education, alumni, people
 Requires at least: 2.5
 Tested up to: 2.8.6
-Stable tag: 2.1
+Stable Tag: 2.0
+
+**NOTE: This plugin is no longer under active development. Support
+is also unavailable. Please consider BuddyPress as an alternative.**
 
 The People Manager is designed to be a way for people to share quick
 data about themselves. Designed and used primarily in a university or
@@ -27,13 +30,6 @@ allows you to maintain these to your specification.
 
 *   "Additional Shortcode Generation Options" -- You'll be able to
 specify your own column headers and add/remove columns as you see fit
-
-Known Bugs:
-
-*	No bugs are currently known. If you find one, please email
-tim.moore@maine.edu with the subject "People Manager Bug". Please
-detail the bug you are having, the version of WordPress you are using,
-and list any additional plugins you are using.
 
 == Installation ==
 
