@@ -5,9 +5,6 @@ Requires at least: 2.5
 Tested up to: 2.8.6
 Stable Tag: 2.1
 
-**NOTE: This plugin is no longer under active development. Support
-is also unavailable. Please consider BuddyPress as an alternative.**
-
 The People Manager is designed to be a way for people to share quick
 data about themselves. Designed and used primarily in a university or
 college setting.
