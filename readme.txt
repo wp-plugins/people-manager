@@ -6,8 +6,7 @@ Tested up to: 2.8.6
 Stable Tag: 2.1
 
 The People Manager is designed to be a way for people to share quick
-data about themselves. Designed and used primarily in a university or
-college setting.
+data about themselves.
 
 == Description ==
 
